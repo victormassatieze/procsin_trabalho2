@@ -7,7 +7,7 @@ close all % Fecha as figuras geradas pelo script acima
 
 figure('units', 'centimeters', 'position', [3, 3, 20, 9])
 freqz(b,a) % plot da resposta em frequencia
-saveas(gcf,'ellipHP_freqz.png')
+saveas(gcf,'item4/img/ellipHP_freqz.png')
 
 %-----grafico da resposta em escala linear-----%
 figure('units', 'centimeters', 'position', [3, 3, 20, 5])
@@ -16,7 +16,7 @@ plot(w/pi,abs(h))
 grid on
 xlabel('Normalized Frequency (\times\pi rad/sample)')
 title('Magnitude |H(j\omega)| (Aproximação Elíptica)')
-saveas(gcf,'ellipHP_mag.png')
+saveas(gcf,'item4/img/ellipHP_mag.png')
 
 %% --- Carregando os sinais de audio:
 [x1,sr1] = audioread("uranus.wav");
@@ -41,8 +41,8 @@ y2 = filter(b,a,x2);
 %soundsc(y2,FS);
 
 % --- Salva os resultados:
-audiowrite('uranus_ellipHP.wav',y1,FS);
-audiowrite('sample-0_ellipHP.wav',y2,FS);
+audiowrite('item4/audio/uranus_ellipHP.wav',y1,FS);
+audiowrite('item4/audio/sample-0_ellipHP.wav',y2,FS);
 
 %% --- Salva os espectrogramas:
 [sx1,fx1,tx1] = spectrogram(x1,hamming(1024),512,2048,FS);
@@ -75,4 +75,4 @@ xlabel('tempo [s]')
 ylim([-inf inf])
 colormap bone
 colorbar
-saveas(f3,'ellipHP_filt.png')
+saveas(f3,'item4/img/ellipHP_filt.png')

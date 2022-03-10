@@ -1,23 +1,27 @@
 %% --- Inicializando os coeficientes do filtro:
+% para outros filtros, mudar para fig_cheby1, fig_cheby2 ou fig_ellip:
 fig_butter;
 close all % Fecha as figuras geradas pelo script acima
+bi = b;
+ai = a;
 
 %% ---Realizando a transformação espectral:
 [b,a] = iirlp2hp(b,a,0.4,0.6); % 0.4pi -> pi - 0.4pi (passa-alta)
 
 figure('units', 'centimeters', 'position', [3, 3, 20, 9])
 freqz(b,a) % plot da resposta em frequencia
-saveas(gcf,'butterHP_freqz.png')
+saveas(gcf,'item4/img/butterHP_freqz.png') % salva imagem gerada
+                                     % mudar nome caso mude o filtro
 
 %-----grafico da resposta em escala linear-----%
-f2 = figure('units', 'centimeters', 'position', [3, 3, 20, 5]);
-figure(f2)
+figure('units', 'centimeters', 'position', [3, 3, 20, 5]);
 [h,w] = freqz(b,a); % resposta em frequencia
 plot(w/pi,abs(h))
 grid on
 xlabel('Normalized Frequency (\times\pi rad/sample)')
 title('Magnitude |H(j\omega)| (Butterworth)')
-saveas(f2,'butterHP_mag.png')
+saveas(gcf,'item4/img/butterHP_mag.png') % salva imagem gerada
+                               % mudar nome caso mude o filtro
 
 %% --- Carregando os sinais de audio:
 [x1,sr1] = audioread("uranus.wav");
@@ -42,8 +46,8 @@ y2 = filter(b,a,x2);
 %soundsc(y2,FS);
 
 % --- Salva os resultados:
-audiowrite('uranus_butterHP.wav',y1,FS);
-audiowrite('sample-0_butterHP.wav',y2,FS);
+audiowrite('item4/audio/uranus_butterHP.wav',y1,FS);
+audiowrite('item4/audio/sample-0_butterHP.wav',y2,FS);
 
 %% --- Salva os espectrogramas:
 [sx1,fx1,tx1] = spectrogram(x1,hamming(1024),512,2048,FS);
@@ -53,8 +57,8 @@ audiowrite('sample-0_butterHP.wav',y2,FS);
 
 close all
 % --- Exibe os espectrogramas originais e filtrados:
-f3 = figure('units', 'centimeters','position',[3,2,30,15]);
-figure(f3);
+f = figure('units', 'centimeters','position',[3,2,30,15]);
+figure(f);
 h = tiledlayout(2,2, 'Padding', 'compact');
 nexttile
 surf(tx1,fx1,20*log10(abs(sx1)),'LineStyle','none')
@@ -75,6 +79,7 @@ colormap bone
 colorbar
 nexttile
 surf(ty1,fy1,20*log10(abs(sy1)),'LineStyle','none')
+% para outros filtros, mudar os títulos abaixo:
 title('Espectrograma de Potência do sinal musical filtrado','Butterworth')
 view(0,90)
 xlim([-inf inf])
@@ -90,4 +95,5 @@ xlim([-inf inf])
 ylim([-inf inf])
 colormap bone
 colorbar
-saveas(f3,'butterHP_filt.png')
+saveas(f,'item4/img/butterHP_filt.png') % salva a imagem gerada
+                                  % mudar nome caso mude o filtro

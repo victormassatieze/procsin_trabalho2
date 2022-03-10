@@ -7,7 +7,7 @@ close all % Fecha as figuras geradas pelo script acima
 
 figure('units', 'centimeters', 'position', [3, 3, 20, 9])
 freqz(b,a) % plot da resposta em frequencia
-saveas(gcf,'cheby1HP_freqz.png')
+saveas(gcf,'item4/img/cheby1HP_freqz.png')
 
 %-----grafico da resposta em escala linear-----%
 f2 = figure('units', 'centimeters', 'position', [3, 3, 20, 5]);
@@ -17,7 +17,7 @@ plot(w/pi,abs(h))
 grid on
 xlabel('Normalized Frequency (\times\pi rad/sample)')
 title('Magnitude |H(j\omega)| (Chebyshev Tipo I)')
-saveas(f2,'cheby1HP_mag.png')
+saveas(f2,'item4/img/cheby1HP_mag.png')
 
 %% --- Carregando os sinais de audio:
 [x1,sr1] = audioread("uranus.wav");
@@ -42,8 +42,8 @@ y2 = filter(b,a,x2);
 %soundsc(y2,FS);
 
 % --- Salva os resultados:
-audiowrite('uranus_cheby1HP.wav',y1,FS);
-audiowrite('sample-0_cheby1HP.wav',y2,FS);
+audiowrite('item4/audio/uranus_cheby1HP.wav',y1,FS);
+audiowrite('item4/audio/sample-0_cheby1HP.wav',y2,FS);
 
 %% --- Salva os espectrogramas:
 [sx1,fx1,tx1] = spectrogram(x1,hamming(1024),512,2048,FS);
@@ -52,8 +52,8 @@ audiowrite('sample-0_cheby1HP.wav',y2,FS);
 [sy2,fy2,ty2] = spectrogram(y2,hamming(1024),512,2048,FS);
 
 % --- Exibe os espectrogramas originais e filtrados:
-f3 = figure('units', 'centimeters','position',[3,2,30,8]);
-figure(f3);
+f = figure('units', 'centimeters','position',[3,2,30,8]);
+figure(f);
 h = tiledlayout(1,2, 'Padding', 'compact');
 nexttile
 surf(ty1,fy1,20*log10(abs(sy1)),'LineStyle','none')
@@ -74,4 +74,4 @@ xlim([-inf inf])
 ylim([-inf inf])
 colormap bone
 colorbar
-saveas(f3,'cheby1HP_filt.png')
+saveas(f,'item4/img/cheby1HP_filt.png')
